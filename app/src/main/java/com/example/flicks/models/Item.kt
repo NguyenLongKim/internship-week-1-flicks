@@ -1,4 +1,4 @@
-package com.example.flicks
+package com.example.flicks.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -18,5 +18,5 @@ data class Item(
     val title:String,
     val video:Boolean,
     val vote_average:Float,
-    val vote_count:Int
+    val vote_count:Int,
 ):Parcelable
