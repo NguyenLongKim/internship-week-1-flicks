@@ -2,6 +2,7 @@ package com.example.flicks.repositories
 
 import com.example.flicks.api.MovieDatabaseApi
 import com.example.flicks.models.NowPlayingMovies
+import com.example.flicks.models.PopularMovies
 import com.example.flicks.models.Trailers
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -22,6 +23,10 @@ class MoviesRepository {
 
     fun loadItems(page: Int, callBack: Callback<NowPlayingMovies>) {
         apiService.getMovies(api_key, page).enqueue(callBack)
+    }
+
+    fun loadPopularItems(page:Int,callBack: Callback<PopularMovies>){
+        apiService.getPopularMovies(api_key,page).enqueue(callBack)
     }
 
     fun getVideoKey(movie_id: Int, callBack: Callback<Trailers>) {

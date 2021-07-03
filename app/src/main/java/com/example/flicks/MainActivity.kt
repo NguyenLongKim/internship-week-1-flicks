@@ -52,20 +52,22 @@ class MainActivity : AppCompatActivity() {
         })
         moviesAdapter.setItemClickListener(object : ItemClickListener {
             override fun onClick(item: Item) {
+                val videoKey=mainActivityViewModel.getVideoKey(item.id)
                 Toast.makeText(this@MainActivity, item.title, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@MainActivity, VideoActivity::class.java)
-                mainActivityViewModel.getVideoKey(item.id, object : Callback<Trailers> {
-                    override fun onResponse(call: Call<Trailers>, response: Response<Trailers>) {
-                        intent.putExtra("item", item)
-                        intent.putExtra("video_key", response.body()!!.youtube[0].source)
-                        startActivity(intent)
-                    }
-
-                    override fun onFailure(call: Call<Trailers>, t: Throwable) {
-
-                    }
-                })
+                intent.putExtra("item", item)
+                intent.putExtra("video_key",videoKey )
+                startActivity(intent)
             }
         })
+    }
+
+    override fun onBackPressed() {
+        val layoutManager = activityMainBinding.rvMovies.layoutManager as LinearLayoutManager
+        if ((layoutManager).findFirstVisibleItemPosition()>0){
+            layoutManager.smoothScrollToPosition(activityMainBinding.rvMovies,null,0)
+        }else{
+            super.onBackPressed()
+        }
     }
 }
